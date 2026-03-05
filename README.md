@@ -1,4 +1,4 @@
-# 🌤️ Weather Prediction Analytics System
+# Weather Prediction Analytics System
 ### Automated ETL · Snowflake ML Forecasting · Apache Airflow Orchestration
 
 <p align="center">
@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 What This Project Does
+## What This Project Does
 
 This system ingests 60 days of real historical weather data from four US cities, stores it in Snowflake, and uses Snowflake's native machine learning engine to generate a 7-day temperature forecast — all running on a fully automated daily schedule through Apache Airflow.
 
@@ -23,7 +23,7 @@ Two separate pipelines handle the two stages of work. The first pipeline runs at
 
 ---
 
-## 🗂️ Repository Contents
+## Repository Contents
 
 ```
 weather-prediction-analytics/
@@ -41,7 +41,7 @@ weather-prediction-analytics/
 
 ---
 
-## 🏙️ Cities in Scope
+## Cities in Scope
 
 | # | City | State | Latitude | Longitude | Climate |
 |---|------|-------|----------|-----------|---------|
@@ -52,7 +52,7 @@ weather-prediction-analytics/
 
 ---
 
-## ⚙️ Pipeline 1 — WeatherData_ETL
+## Pipeline 1 — WeatherData_ETL
 
 **File:** `weather_etl_pipeline.py`  
 **DAG ID:** `WeatherData_ETL`  
@@ -120,7 +120,7 @@ City coordinates are stored as an Airflow Variable (JSON), not hardcoded. Adding
 
 ---
 
-## 🤖 Pipeline 2 — TrainPredict
+## Pipeline 2 — TrainPredict
 
 **File:** `weather_prediction.py`  
 **DAG ID:** `TrainPredict`  
@@ -162,7 +162,7 @@ FROM ADHOC.CITY_WEATHER_FORECAST
 
 ---
 
-## 🗄️ Snowflake Database Structure
+## Snowflake Database Structure
 
 **Database:** `USER_DB_FERRET`
 
@@ -209,7 +209,7 @@ USER_DB_FERRET
 
 ---
 
-## 📊 Model Evaluation Results
+## Model Evaluation Results
 
 Query to retrieve the latest clean metrics with no duplicates:
 
@@ -243,7 +243,7 @@ ORDER BY SERIES, ERROR_METRIC;
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 ### Airflow — Both DAGs Running
 ![Airflow DAGs Overview](screenshots/airflow_dags_overview.png)
@@ -259,7 +259,7 @@ ORDER BY SERIES, ERROR_METRIC;
 
 ---
 
-## 🔍 Useful Queries
+## Useful Queries
 
 **Confirm data loaded for all four cities:**
 ```sql
@@ -315,7 +315,7 @@ ORDER BY DATE DESC;
 
 ---
 
-## 🛠️ Setup Guide
+## Setup Guide
 
 ### Prerequisites
 
@@ -354,7 +354,7 @@ Copy `weather_etl_pipeline.py` and `weather_prediction.py` into your Airflow `da
 
 ---
 
-## 💡 Design Decisions
+## Design Decisions
 
 **MERGE over DELETE + INSERT** — the UPSERT strategy makes every pipeline run idempotent. Running it twice on the same day produces the same table state as running it once. A delete-then-insert approach creates a brief window of data absence on every execution.
 
@@ -366,7 +366,7 @@ Copy `weather_etl_pipeline.py` and `weather_prediction.py` into your Airflow `da
 
 ---
 
-## 📚 Lessons Learned
+## Lessons Learned
 
 A 60-day training window produces realistic MAE values but underperforms on confidence interval calibration. The `COVERAGE_INTERVAL` metric climbs toward 0.95 as more history accumulates — a 365-day rolling window would significantly improve forecast reliability in production.
 
@@ -376,12 +376,6 @@ Airflow's `@task` decorator combined with a loop over a JSON variable demonstrat
 
 ---
 
-## 👥 Authors
-
-**DATA226 — Building a Weather Prediction Analytics using Snowflake & Airflow**
-Group project · 2-person team · San Jose State University
-
----
 
 <p align="center">
   Apache Airflow &nbsp;·&nbsp; Snowflake ML &nbsp;·&nbsp; Open-Meteo API &nbsp;·&nbsp; Python
