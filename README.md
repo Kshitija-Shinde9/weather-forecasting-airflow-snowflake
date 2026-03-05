@@ -3,19 +3,18 @@
 ---
 
 ## Table of Contents
-
-- [Overview](#-overview)
-- [System Architecture](#-system-architecture)
-- [Cities Tracked](#-cities-tracked)
-- [Project Structure](#-project-structure)
-- [Pipeline 1 — Weather ETL DAG](#-pipeline-1--weather-etl-dag)
-- [Pipeline 2 — Train & Predict DAG](#-pipeline-2--trainpredict-dag)
-- [Snowflake Schema & Tables](#-snowflake-schema--tables)
-- [Airflow Setup](#️-airflow-setup)
-- [Screenshots](#-screenshots)
-- [Key SQL Queries](#-key-sql-queries)
-- [Results & Forecast Output](#-results--forecast-output)
-- [Lessons Learned](#-lessons-learned)
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
+- [Cities Tracked](#cities-tracked)
+- [Project Structure](#project-structure)
+- [Pipeline 1 — Weather ETL DAG](#pipeline-1----weather-etl-dag)
+- [Pipeline 2 — Train & Predict DAG](#pipeline-2----trainpredict-dag)
+- [Snowflake Schema & Tables](#snowflake-schema--tables)
+- [Airflow Setup](#airflow-setup)
+- [Screenshots](#screenshots)
+- [Key SQL Queries](#key-sql-queries)
+- [Results & Forecast Output](#results--forecast-output)
+- [Lessons Learned](#lessons-learned)
 
 ---
 
