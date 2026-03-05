@@ -1,4 +1,4 @@
-# 🌤️ Weather Prediction Analytics Pipeline
+# Weather Prediction Analytics Pipeline
 ### Powered by Snowflake ML · Apache Airflow · Open-Meteo API
 
 <p align="center">
@@ -10,7 +10,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [System Architecture](#-system-architecture)
@@ -27,7 +27,7 @@
 
 ---
 
-## 🌐 Overview
+## Overview
 
 This project builds a **fully automated end-to-end weather analytics and forecasting system** using:
 
@@ -39,7 +39,7 @@ The system ingests historical weather data for **4 US cities**, loads it into Sn
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -68,31 +68,31 @@ The system ingests historical weather data for **4 US cities**, loads it into Sn
 
 ---
 
-## 🏙️ Cities Tracked
+## Cities Tracked
 
 | City | Latitude | Longitude | State |
 |------|----------|-----------|-------|
-| 🌴 Miami | 25.7617 | -80.1918 | Florida |
-| 🏖️ Newport Beach | 33.6189 | -117.9289 | California |
-| 🌲 Seattle | 47.6062 | -122.3321 | Washington |
-| 🦞 Boston | 42.3601 | -71.0589 | Massachusetts |
+| Miami | 25.7617 | -80.1918 | Florida |
+| Newport Beach | 33.6189 | -117.9289 | California |
+| Seattle | 47.6062 | -122.3321 | Washington |
+| Boston | 42.3601 | -71.0589 | Massachusetts |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 weather-prediction-analytics/
 │
-├── 📄 README.md
-├── 🐍 weather_etl_pipeline.py       # Airflow DAG 1 — ETL Pipeline
-├── 🐍 weather_prediction.py         # Airflow DAG 2 — Train & Predict
-└── 🗄️  snowflake.sql                 # All Snowflake DDL & queries
+├── README.md
+├── weather_etl_pipeline.py       # Airflow DAG 1 — ETL Pipeline
+├── weather_prediction.py         # Airflow DAG 2 — Train & Predict
+└── snowflake.sql                 # All Snowflake DDL & queries
 ```
 
 ---
 
-## 🔄 Pipeline 1 — Weather ETL DAG
+## Pipeline 1 — Weather ETL DAG
 
 **DAG ID:** `WeatherData_ETL`  
 **Schedule:** `30 2 * * *` (Daily at 02:30 UTC)  
@@ -108,7 +108,7 @@ extract  →  transform  →  load
 
 ### Task Breakdown
 
-#### 1️⃣ `extract(latitude, longitude)`
+#### `extract(latitude, longitude)`
 - Calls the **Open-Meteo Forecast API**
 - Fetches **past 60 days** of daily weather data
 - Collects: `temp_max`, `temp_min`, `temp_mean`, `precipitation`, `wind_speed`, `weather_code`
@@ -125,12 +125,12 @@ params = {
 }
 ```
 
-#### 2️⃣ `transform(raw_data, latitude, longitude, city)`
+#### `transform(raw_data, latitude, longitude, city)`
 - Flattens the nested API JSON response
 - Converts data into a list of tuples, one per day
 - Returns clean records ready for loading
 
-#### 3️⃣ `load(records, target_table)`
+#### `load(records, target_table)`
 - Uses a **MERGE (UPSERT)** strategy via a temp staging table
 - Prevents duplicate records on re-runs
 - Wrapped in **SQL transaction** with `try/except/rollback` for data integrity
@@ -156,11 +156,11 @@ City configurations are stored as an **Airflow Variable** (JSON) — no hardcode
 ]
 ```
 
-> 📌 Set via **Admin → Variables → `weather_cities`** in the Airflow UI
+> Set via **Admin → Variables → `weather_cities`** in the Airflow UI
 
 ---
 
-## 🤖 Pipeline 2 — TrainPredict DAG
+## Pipeline 2 — TrainPredict DAG
 
 **DAG ID:** `TrainPredict`  
 **Schedule:** `30 3 * * *` (Daily at 03:30 UTC — runs 1 hour after ETL)  
@@ -172,7 +172,7 @@ City configurations are stored as an **Airflow Variable** (JSON) — no hardcode
 RAW.CITY_WEATHER  →  [train]  →  [predict]  →  ANALYTICS.CITY_WEATHER_FINAL
 ```
 
-#### Task 1️⃣ `train()`
+#### Task 1 `train()`
 
 1. Creates a **clean training view** (`ADHOC.CITY_WEATHER_TRAIN_VIEW`) with non-null `TEMP_MAX`
 2. Trains a native **Snowflake ML Forecast Model** using `SNOWFLAKE.ML.FORECAST`
@@ -188,7 +188,7 @@ CREATE OR REPLACE SNOWFLAKE.ML.FORECAST ANALYTICS.CITY_WEATHER_FORECAST_MODEL (
 );
 ```
 
-#### Task 2️⃣ `predict()`
+#### Task 2 `predict()`
 
 1. Runs the trained model to generate **7-day forecasts** with **95% prediction intervals**
 2. Captures results using `RESULT_SCAN(LAST_QUERY_ID())`
@@ -209,7 +209,7 @@ FROM ADHOC.CITY_WEATHER_FORECAST
 
 ---
 
-## 🗄️ Snowflake Schema & Tables
+## Snowflake Schema & Tables
 
 ### Database & Schema Layout
 
@@ -256,7 +256,7 @@ USER_DB_FERRET
 
 ---
 
-## ⚙️ Airflow Setup
+## Airflow Setup
 
 ### Prerequisites
 
@@ -289,7 +289,7 @@ Configure in **Admin → Variables:**
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 > **Place your screenshots in a `/screenshots` folder in this repo and update the paths below.**
 
@@ -307,7 +307,7 @@ Configure in **Admin → Variables:**
 
 ---
 
-## 🔍 Key SQL Queries
+## Key SQL Queries
 
 ### Check Latest Loaded Data
 ```sql
@@ -357,12 +357,12 @@ SELECT * FROM ANALYTICS.CITY_WEATHER_MODEL_METRICS;
 
 ---
 
-## 📊 Results & Forecast Output
+## Results & Forecast Output
 
 The `ANALYTICS.CITY_WEATHER_FINAL` table contains a **unified view** of:
 
-- ✅ **Historical actuals** — 60 days of real weather observations
-- 🔮 **7-day forecast** — ML-predicted max temperature with 95% confidence intervals
+-  **Historical actuals** — 60 days of real weather observations
+-  **7-day forecast** — ML-predicted max temperature with 95% confidence intervals
 
 ### Sample Output Structure
 
@@ -378,7 +378,7 @@ Newport Beach | 2026-03-06 | NULL   | 22.0     | 19.5        | 24.5
 
 ---
 
-## 💡 Lessons Learned
+## Lessons Learned
 
 1. **Snowflake ML is powerful out-of-the-box** — `SNOWFLAKE.ML.FORECAST` requires minimal setup compared to external ML frameworks, and handles multi-series forecasting with a single `SERIES_COLNAME` parameter.
 
@@ -392,7 +392,7 @@ Newport Beach | 2026-03-06 | NULL   | 22.0     | 19.5        | 24.5
 
 ---
 
-## 👥 Authors
+## Authors
 
 Built as part of **DATA226 — Building a Weather Prediction Analytics using Snowflake & Airflow**
 
