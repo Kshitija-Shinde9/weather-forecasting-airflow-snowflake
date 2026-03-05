@@ -11,7 +11,6 @@
 - [Pipeline 2 — Train & Predict DAG](#pipeline-2----trainpredict-dag)
 - [Snowflake Schema & Tables](#snowflake-schema--tables)
 - [Airflow Setup](#airflow-setup)
-- [Screenshots](#screenshots)
 - [Key SQL Queries](#key-sql-queries)
 - [Results & Forecast Output](#results--forecast-output)
 - [Lessons Learned](#lessons-learned)
