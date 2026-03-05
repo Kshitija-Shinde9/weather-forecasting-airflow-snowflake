@@ -41,30 +41,7 @@ The system ingests historical weather data for **4 US cities**, loads it into Sn
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        APACHE AIRFLOW                           │
-│                                                                 │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  DAG 1: WeatherData_ETL  (Daily @ 02:30 UTC)             │  │
-│  │                                                          │  │
-│  │  Open-Meteo API  →  Extract  →  Transform  →  Load       │  │
-│  │  (4 cities, parallel tasks)        ↓                     │  │
-│  │                              Snowflake RAW.CITY_WEATHER   │  │
-│  └──────────────────────────────────────────────────────────┘  │
-│                              ↓                                  │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  DAG 2: TrainPredict      (Daily @ 03:30 UTC)            │  │
-│  │                                                          │  │
-│  │  RAW.CITY_WEATHER  →  Train Forecast Model               │  │
-│  │                              ↓                           │  │
-│  │                       Predict 7 Days                     │  │
-│  │                              ↓                           │  │
-│  │              ANALYTICS.CITY_WEATHER_FINAL                │  │
-│  │          (Historical UNION Forecast Results)             │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-```
+<img width="1400" height="960" alt="image" src="https://github.com/user-attachments/assets/2090cbee-f6cf-48f0-9497-8024dbe222ca" />
 
 ---
 
