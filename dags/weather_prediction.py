@@ -136,7 +136,7 @@ with DAG(
 
         try:
 
-            # Run Forecast
+            # 1️⃣ Run Forecast
             cur.execute(f"""
             CALL {model_name}!FORECAST(
                 FORECASTING_PERIODS => 7,
@@ -144,18 +144,18 @@ with DAG(
             )
             """)
 
-            # Get Query ID
+            # 2️⃣ Get Query ID
             cur.execute("SELECT LAST_QUERY_ID()")
             query_id = cur.fetchone()[0]
 
-            # Store Forecast Results
+            # 3️⃣ Store Forecast Results
             cur.execute(f"""
             CREATE OR REPLACE TABLE {forecast_table} AS
             SELECT *
             FROM TABLE(RESULT_SCAN('{query_id}'))
             """)
 
-            # Create Final Table (Historical + Forecast)
+            # 4️⃣ Create Final Table (Historical + Forecast)
             cur.execute(f"""
             CREATE OR REPLACE TABLE {final_table} AS
 
