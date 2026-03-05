@@ -333,6 +333,9 @@ The `ANALYTICS.CITY_WEATHER_FINAL` table contains a **unified view** of:
   
 <img width="1710" height="950" alt="image" src="https://github.com/user-attachments/assets/fabb3761-cada-4378-97e8-a2dc52f179ec" />
 
+<img width="1707" height="635" alt="image" src="https://github.com/user-attachments/assets/231e3c10-509b-4c9a-a344-f3d3241f0b9f" />
+
+
 ---
 
 ## Lessons Learned
